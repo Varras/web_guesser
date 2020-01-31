@@ -1,30 +1,38 @@
 require 'sinatra'
-require 'sinatra/reloader'
 
-def check_guess(guess)
-    if params["guess"].to_i == guess
-        "You got it right!"        
-    elsif params["guess"].to_i > guess
-        if params["guess"].to_i > (guess + 5)
-            "Way to high!"
-        else
-            "Close, but too high!"
-        end
-    elsif params["guess"].to_i < guess
-        if params["guess"].to_i <(guess - 5)
-            "Way to low!"
-        else
-            "Close, but too low!"
-        end
-        
-    end
-end
+
 
 
 number = rand(101)
 get '/' do
     guess = params["guess"].to_i
     message = check_guess(number)
-    erb :index, :locals => {:number => number, :message => message }    
+    background = check_guess(background)
+    erb :index, :locals => {:number => number, :message => message, :background => background }    
 
+end
+
+
+def check_guess(guess, background)
+    if params["guess"].to_i == guess
+        "You got it right! The secret number is #{guess}"
+        background = "background-color:#A1D490"     
+    elsif params["guess"].to_i > guess
+        if params["guess"].to_i > (guess + 5)
+            "Way to high!"
+            background = "background-color:#F0501A"
+        else
+            "Close, but too high!"
+            background = "background-color:#D4A190"
+        end
+    elsif params["guess"].to_i < guess
+        if params["guess"].to_i <(guess - 5)
+            "Way to low!"
+            background = "background-color:#F0501A"
+        else
+            "Close, but too low!"
+            background = "background-color:#D4A190"
+        end
+        
+    end
 end
